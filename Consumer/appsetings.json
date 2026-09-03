@@ -1,0 +1,20 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information"
+    }
+  },
+  "Kafka": {
+    "Consumer": {
+      "BootstrapServers": "localhost:9092",
+      "GroupId": "RawData_5",
+      "AutoOffsetReset": "Earliest",
+      "EnableAutoCommit": false
+    },
+    "Topic": "RawData"
+  },
+  "MongoDb": {
+    "ConnectionString": "mongodb://localhost:27017",
+    "DatabaseName": "SurvyDb"
+  }
+}
