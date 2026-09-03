@@ -1,3 +1,6 @@
+import csv
+import json
+
 from confluent_kafka import Producer
 import socket
 from pathlib import Path
@@ -17,11 +20,11 @@ def main():
     BASE_DIR=Path(__file__).parent.parent
     file_path = BASE_DIR / "AllDataFiles" / "developer_ai_learning_raw.csv"
     try:
-        with open(file_path,"r") as f:
-            rows=f.readlines()
-            for r in rows:
+        with open(file_path,"r",encoding='utf-8') as f:
+            reader=csv.DictReader(f)
+            for row in reader:
                 producer.produce(topic='RawData',
-                                 value=r.strip(),
+                                 value=json.dumps(row),
                                  callback=acked
                                  )
                 producer.poll(0)
