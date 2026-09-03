@@ -1,16 +1,35 @@
-# This is a sample Python script.
+from confluent_kafka import Producer
+import socket
+from pathlib import Path
+conf = {'bootstrap.servers': 'localhost:9092',
+        'client.id': socket.gethostname()}
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+producer = Producer(conf)
 
+def acked(err, msg):
+    if err is not None:
+        print("Failed to deliver message: %s: %s" % (str(msg), str(err)))
+    else:
+        print("Message produced: %s" % (str(msg)))
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def main():
+    print("enter to main")
+    BASE_DIR=Path(__file__).parent.parent
+    file_path = BASE_DIR / "AllDataFiles" / "developer_ai_learning_raw.csv"
+    try:
+        with open(file_path,"r") as f:
+            rows=f.readlines()
+            for r in rows:
+                producer.produce(topic='RawData',
+                                 value=r.strip(),
+                                 callback=acked
+                                 )
+                producer.poll(0)
+            print("Flushing remaining messages...")
+            producer.flush()
+        print("all messages delivered")
+    except FileNotFoundError:
+        print(f"error file {file_path} not found")
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if __name__=="__main__":
+    main()
