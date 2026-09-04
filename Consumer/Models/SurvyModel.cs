@@ -1,68 +1,57 @@
-﻿namespace Consumer.Models;
-
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System.Text.Json.Serialization;
 
-public class DeveloperSurveyResponse
+namespace SurveyApi.Models;
+
+[BsonIgnoreExtraElements]
+public class CleanSurveyAnswer
 {
     [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; } = null!;
+
     [BsonElement("responseId")]
-    [JsonPropertyName("responseId")]
-    public int ResponseId { get; set; }
+    public long ResponseId { get; set; }
 
     [BsonElement("age")]
-    [JsonPropertyName("age")]
-    public string? Age { get; set; }
+    public string Age { get; set; } = string.Empty;
 
-    [BsonElement("aiLearningMethods")]
-    [JsonPropertyName("aiLearningMethods")]
-    public List<string>? AiLearningMethods { get; set; }
-
-    [BsonElement("aiSentiment")]
-    [JsonPropertyName("aiSentiment")]
-    public string? AiSentiment { get; set; }
-
-    [BsonElement("aiTrust")]
-    [JsonPropertyName("aiTrust")]
-    public string? AiTrust { get; set; }
-
-    [BsonElement("aiUsage")]
-    [JsonPropertyName("aiUsage")]
-    public string? AiUsage { get; set; }
+    [BsonElement("yearsCode")]
+    public long? YearsCode { get; set; }
 
     [BsonElement("devType")]
-    [JsonPropertyName("devType")]
     public string? DevType { get; set; }
 
-    [BsonElement("experienceLevel")]
-    [JsonPropertyName("experienceLevel")]
-    public string? ExperienceLevel { get; set; }
-
-    [BsonElement("learnCodeAI")]
-    [JsonPropertyName("learnCodeAI")]
-    public string? LearnCodeAI { get; set; }
-
     [BsonElement("learnCodeChoose")]
-    [JsonPropertyName("learnCodeChoose")]
     public string? LearnCodeChoose { get; set; }
 
     [BsonElement("learningMethods")]
-    [JsonPropertyName("learningMethods")]
     public List<string>? LearningMethods { get; set; }
 
-    [BsonElement("usesAIForLearning")]
-    [JsonPropertyName("usesAIForLearning")]
-    public bool UsesAIForLearning { get; set; }
+    [BsonElement("learnCodeAI")]
+    public string? LearnCodeAI { get; set; }
+
+    [BsonElement("aiLearningMethods")]
+    public List<string>? AiLearningMethods { get; set; }
+
+    [BsonElement("aiUsage")]
+    public string? AiUsage { get; set; }
+
+    [BsonElement("aiTrust")]
+    public string? AiTrust { get; set; }
+
+    [BsonElement("aiSentiment")]
+    public string? AiSentiment { get; set; }
+
+    [BsonElement("experienceLevel")]
+    public string ExperienceLevel { get; set; } = string.Empty;
 
     [BsonElement("usesDocumentation")]
-    [JsonPropertyName("usesDocumentation")]
     public bool UsesDocumentation { get; set; }
 
-    [BsonElement("usesStackOverflow")]
-    [JsonPropertyName("usesStackOverflow")]
-    public bool UsesStackOverflow { get; set; }
+    [BsonElement("usesAIForLearning")]
+    public bool UsesAIForLearning { get; set; }
 
-    [BsonElement("yearsCode")]
-    [JsonPropertyName("yearsCode")]
-    public int YearsCode { get; set; }
+    [BsonElement("usesStackOverflow")]
+    public bool UsesStackOverflow { get; set; }
 }
