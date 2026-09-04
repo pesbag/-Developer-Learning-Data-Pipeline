@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="../DeveloprtLearningDataApi/DeveloprtLearningDataApi.csproj" />
   <Project Path="Consumer.csproj" />
 </Solution>
