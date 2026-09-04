@@ -31,4 +31,11 @@ public class SurvyRepository: ISurvyRepository
             .Take(10)
             .ToListAsync();
     }
+    public async Task<IEnumerable<CleanSurveyAnswer>> GetUseDocsAndAIAsync()
+    {
+        return await _collection.AsQueryable()
+            .Where(d => d.UsesDocumentation == true && d.UsesAIForLearning==true)
+            .Take(10)
+            .ToListAsync();
+    }
 }
