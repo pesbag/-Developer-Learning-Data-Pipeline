@@ -54,7 +54,7 @@ public class SurveyAnswersController : ControllerBase
         }
         return Ok(answers);
     }
-    [HttpGet("top-backend-ai-learners")]
+    [HttpGet("Top-backend-ai-learners")]
     public async Task<ActionResult<IEnumerable<CleanSurveyAnswer>>> GetTopBackEndAILearners()
     {
         var respondents = await _repo.GetTop20BackEndAILearnersAsync();
