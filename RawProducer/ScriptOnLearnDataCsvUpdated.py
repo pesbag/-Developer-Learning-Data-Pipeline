@@ -41,35 +41,17 @@ AI_CODEGEN = "AI CodeGen tools or AI-enabled apps"
 STACK_OVERFLOW = "Stack Overflow or Stack Exchange"
 
 def clean_script(df):
-    # try:
-    #     df=load_data()
-    # except FileNotFoundError:
-    #     print("Error file not found")
-    #     return
-    # shape_of_data(df)
-    # info_of_table(df)
-    # count_null_rows(df)
-    # columns_exists(df)
-    # describe_data(df)
     is_valid=check_for_valid_columns(df)
     if not is_valid:
         return
-    # valid_type_age=validate_age(df)
-    # if not valid_type_age:
-    #     fix_age_type(df)
     valid_type_years_code=validate_years_code(df)
     if not valid_type_years_code:
         fix_years_code_type(df)
-    # info_of_table(df)
     check_for_semicolon(df)
-    # save_to_json_clean(df)
     add_new_columns(df)
     add_experienceLevel_column(df)
     df = rename_columns_camel_case(df)
     return df
-    # save_to_json_processed(df)
-    print("Finsh to validate all data")
-    # return get_clean_row("processed_data.jsonl")
 
 def get_clean_row(json_file_name):
     try:

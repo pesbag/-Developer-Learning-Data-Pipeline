@@ -7,18 +7,10 @@ from ScriptOnLearnDataCsvUpdated import clean_script
 from confluent_kafka import Consumer, KafkaException, KafkaError
 from confluent_kafka import Producer
 import socket
-# BASE_DIR=Path(__file__).parent.parent
-# file_path=BASE_DIR/"RawValidator"
-# from
-# CSV_COLUMNS = [
-#     'ResponseId', 'Age', 'YearsCode', 'DevType',
-#     'LearnCodeChoose', 'LearnCode', 'LearnCodeAI',
-#     'AILearnHow', 'AISelect', 'AIAcc', 'AISent'
-# ]
 producerConf = {'bootstrap.servers': 'localhost:9092',
         'client.id': socket.gethostname()}
 consumerConf = {'bootstrap.servers': 'localhost:9092',
-        'group.id': 'RawData_5',
+        'group.id': 'RawData_8',
         'auto.offset.reset': 'earliest'}
 producer = Producer(producerConf)
 consumer = Consumer(consumerConf)
@@ -47,9 +39,10 @@ def raw_producer_loop(consumer,topics):
                 clean_df=clean_script(df)
                 if clean_df is None:
                     continue
-                clean_csv_str = clean_df.to_csv(index=False, header=False).strip()
+                dict_record=clean_df.to_dict(orient='records')[0]
+                clean_json=json.dumps(dict_record).encode('utf-8')
                 producer.produce(topic='cleanData',
-                                 value=clean_csv_str.encode('utf-8'),
+                                 value=clean_json,
                                  callback=acked
                                  )
                 producer.poll(0)
