@@ -20,7 +20,14 @@ public class SurvyRepository: ISurvyRepository
     public async Task<IEnumerable<CleanSurveyAnswer>> GetRespondsByAITrustAsync(string AITrust)
     {
         return await _collection.AsQueryable()
-            .Where(e => e.AiTrust == AITrust)
+            .Where(a => a.AiTrust == AITrust)
+            .Take(10)
+            .ToListAsync();
+    }
+    public async Task<IEnumerable<CleanSurveyAnswer>> GetUseDocsAsync()
+    {
+        return await _collection.AsQueryable()
+            .Where(d => d.UsesDocumentation == true)
             .Take(10)
             .ToListAsync();
     }

@@ -34,5 +34,14 @@ public class SurveyAnswersController : ControllerBase
         }
         return Ok(answers);
     }
-
+    [HttpGet("UseDocumentation")]
+    public async Task<ActionResult<IEnumerable<CleanSurveyAnswer>>> GetUseDocumentationAsync()
+    {
+        var answers = await _repo.GetUseDocsAsync();
+        if (!answers.Any())
+        {
+            return NotFound();
+        }
+        return Ok(answers);
+    }
 }
