@@ -38,4 +38,13 @@ public class SurvyRepository: ISurvyRepository
             .Take(10)
             .ToListAsync();
     }
+    public async Task<List<CleanSurveyAnswer>> GetTop20BackEndAILearnersAsync()
+    {
+        return await _collection.AsQueryable()
+            .Where(x=>x.DevType!.Contains("back-end") &&
+                      x.UsesAIForLearning)
+            .OrderByDescending(x => x.YearsCode)
+            .Take(20)
+            .ToListAsync();
+    }
 }

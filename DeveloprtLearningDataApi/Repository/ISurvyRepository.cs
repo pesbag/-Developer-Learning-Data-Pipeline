@@ -8,4 +8,5 @@ public interface ISurvyRepository
     Task<IEnumerable<CleanSurveyAnswer>> GetRespondsByAITrustAsync(string AITrust);
     Task<IEnumerable<CleanSurveyAnswer>> GetUseDocsAsync();
     Task<IEnumerable<CleanSurveyAnswer>> GetUseDocsAndAIAsync();
+    Task<List<CleanSurveyAnswer>> GetTop20BackEndAILearnersAsync();
 }
