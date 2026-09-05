@@ -1,12 +1,18 @@
 import csv
 import json
+import os
 
 from confluent_kafka import Producer
 import socket
 from pathlib import Path
-conf = {'bootstrap.servers': 'localhost:9092',
-        'client.id': socket.gethostname()}
+# conf = {'bootstrap.servers': 'localhost:9092',
+#         'client.id': socket.gethostname()}
+bootstrap_servers = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092")
 
+conf = {
+    'bootstrap.servers': bootstrap_servers,
+    'client.id': socket.gethostname()
+}
 producer = Producer(conf)
 
 def acked(err, msg):
@@ -17,7 +23,7 @@ def acked(err, msg):
 
 def main():
     print("enter to main")
-    BASE_DIR=Path(__file__).parent.parent
+    BASE_DIR=Path(__file__).resolve().parent.parent
     file_path = BASE_DIR / "AllDataFiles" / "developer_ai_learning_raw.csv"
     try:
         with open(file_path,"r",encoding='utf-8') as f:
